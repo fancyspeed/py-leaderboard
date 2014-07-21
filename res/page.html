@@ -1,0 +1,69 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>LeaderBoard Demo 0.1</title>
+
+<script type="text/javascript">
+	function getSubResult()	
+	{
+		str_path = document.getElementById("str_path").value
+		str_desc = document.getElementById("str_desc").value
+		
+		var xmlhttp;
+		if (window.XMLHttpRequest)
+  		{
+  			xmlhttp=new XMLHttpRequest();
+  		} 
+		else 
+		{
+  			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  		}
+		
+  		xmlhttp.onreadystatechange=function() 
+		{
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) 
+			{
+		    		document.getElementById("cnt").innerHTML="<h4 style=\"color:red;\">MAP Score:</h4>" + xmlhttp.responseText;
+				document.getElementById("inst").innerHTML = ""
+		    	}
+		}
+		
+		if (str_path.length + str_desc.length > 0) 
+		{
+  			xmlhttp.open("GET", "commit?path="+str_path+"&desc="+str_desc, true);
+			xmlhttp.send();
+		}
+	}
+</script>
+</head>
+<body>
+<div id="cont">
+	<div id="lg" align="center">
+		<h3>Judge Online</h3>
+	</div>
+	<p/>
+	<div id="fm" align="center">	
+		<p style="color:red;">File path of to submit:</p>
+                <p>(File must be in 160:/tmp)</p>
+                <p>(Format: itemid[ itemid])</p>
+		<textarea id="str_path" rows="2" cols="100"></textarea>
+		<p style="color:red;">Submission description:</p>
+		<textarea id="str_desc" rows="15" cols="100"></textarea>
+		<p/>
+		<span>
+			<input type="button" value="Submit" id="subbutton" style="color:blue; WIDTH: 80px; HEIGHT: 30px" onclick="getSubResult()"> 
+			<a href="/rank"><big>leaderboard</big></a>
+		</span>
+	</div>
+	<p/>
+	<!--
+	<div align="center">
+	We will return<input type="text" id="tagNO" value="5" maxlength="3" size="3">(10-50)tags.
+	</div>    
+	-->
+	<div id="cnt" align="center"></div>	
+	<p/>
+	<div id="inst"></div>
+</div>
+</body>
+</html>
